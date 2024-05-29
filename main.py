@@ -16,7 +16,7 @@ class MyPersonalStatsWindow(Gtk.Window):
         # Create a button in the header bar
         add_button = Gtk.Button()
         add_button.set_image(Gtk.Image.new_from_icon_name("list-add-symbolic", Gtk.IconSize.BUTTON))
-        header_bar.pack_end(add_button)
+        header_bar.pack_start(add_button)
 
         # Create a box to hold widgets
         self.box = Gtk.Box(spacing=6)
