@@ -1,29 +1,36 @@
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gtk, Gio
 
 class MyPersonalStatsWindow(Gtk.Window):
     def __init__(self):
-        super().__init__(title="My Personal Stats")
-        
-        # Set the default size of the window
+        Gtk.Window.__init__(self, title="My Personal Stats")
         self.set_default_size(700, 700)
-        
-        # Create a label and add it to the window
-        label = Gtk.Label(label="Welcome to My Personal Stats!")
-        self.add(label)
-        
-        # Optional: Set border width
-        self.set_border_width(10)
-        
-    def on_destroy(self, widget):
-        Gtk.main_quit()
 
-# Create an instance of the window
+        # Create a header bar
+        header_bar = Gtk.HeaderBar()
+        header_bar.set_show_close_button(True)
+        header_bar.props.title = "My Personal Stats"
+        self.set_titlebar(header_bar)
+
+        # Create a button in the header bar
+        add_button = Gtk.Button()
+        add_button.set_image(Gtk.Image.new_from_icon_name("list-add-symbolic", Gtk.IconSize.BUTTON))
+        header_bar.pack_end(add_button)
+
+        # Create a box to hold widgets
+        self.box = Gtk.Box(spacing=6)
+        self.add(self.box)
+
+        # Add a button to the window
+        self.button = Gtk.Button(label="Click Me")
+        self.button.connect("clicked", self.on_button_clicked)
+        self.box.pack_start(self.button, True, True, 0)
+
+    def on_button_clicked(self, widget):
+        print("Button clicked!")
+
 win = MyPersonalStatsWindow()
-# Connect the destroy event to the on_destroy method
-win.connect("destroy", win.on_destroy)
-# Show all widgets in the window
+win.connect("destroy", Gtk.main_quit)
 win.show_all()
-# Start the GTK main loop
 Gtk.main()
